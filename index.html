@@ -8,139 +8,133 @@
 <style>
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  color: #0f172a;
-  background: #f8fbff;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  background:#f8fbff;
+  color:#0f172a;
 }
 
-/* 🔥 ANIMATED MESH BG */
+/* BACKGROUND */
 .bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-2;
 }
 
 .bg span {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  filter: blur(120px);
-  animation: float 15s infinite alternate ease-in-out;
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  filter:blur(120px);
+  animation:float 15s infinite alternate ease-in-out;
 }
 
-.bg span:nth-child(1) { background:#38bdf8; top:-100px; left:-100px; }
-.bg span:nth-child(2) { background:#7dd3fc; bottom:-100px; right:-100px; animation-delay:3s; }
-.bg span:nth-child(3) { background:#bae6fd; top:40%; left:60%; animation-delay:6s; }
+.bg span:nth-child(1){background:#38bdf8;top:-100px;left:-100px;}
+.bg span:nth-child(2){background:#7dd3fc;bottom:-100px;right:-100px;animation-delay:3s;}
+.bg span:nth-child(3){background:#bae6fd;top:40%;left:60%;animation-delay:6s;}
 
-@keyframes float {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(80px,60px); }
+@keyframes float{
+  0%{transform:translate(0,0);}
+  100%{transform:translate(80px,60px);}
 }
 
 /* NAVBAR */
-.topbar {
+.topbar{
   display:flex;
   justify-content:space-between;
   padding:20px 40px;
-  backdrop-filter: blur(15px);
-  background: rgba(255,255,255,0.5);
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.5);
 }
 
-/* 🔥 GRADIENT TEXT */
-.hero {
+/* HERO */
+.hero{
   text-align:center;
   margin-top:80px;
 }
 
-.hero h1 {
+.hero h1{
   font-size:90px;
-  background: linear-gradient(90deg,#38bdf8,#0ea5e9,#7dd3fc);
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9,#7dd3fc);
   background-size:200%;
   -webkit-background-clip:text;
   color:transparent;
-  animation: gradientMove 5s infinite linear;
+  animation:gradientMove 5s infinite linear;
 }
 
-@keyframes gradientMove {
-  0% { background-position:0%; }
-  100% { background-position:200%; }
-}
-
-.hero p {
-  opacity:0.7;
+@keyframes gradientMove{
+  0%{background-position:0%;}
+  100%{background-position:200%;}
 }
 
 /* CARDS */
-.cards {
+.cards{
   display:flex;
   justify-content:center;
   gap:40px;
   margin-top:100px;
 }
 
-.card {
+.card{
   width:260px;
   height:180px;
   border-radius:25px;
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(25px);
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(25px);
   border:1px solid rgba(56,189,248,0.3);
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:0.2s;
-  transform-style: preserve-3d;
+  transform-style:preserve-3d;
+  transition:box-shadow 0.2s;
 }
 
-/* 🔥 3D HOVER */
-.card:hover {
-  box-shadow:0 0 50px rgba(56,189,248,0.4);
+.card:hover{
+  box-shadow:0 0 50px rgba(56,189,248,0.5);
 }
 
-.card h3 {
-  transform: translateZ(40px);
+.card h3{
+  transform:translateZ(40px);
 }
 
-/* 🌊 WAVE */
-.wave-container {
+/* WAVE */
+.wave-container{
   position:absolute;
   bottom:0;
   width:100%;
   overflow:hidden;
 }
 
-.wave {
+.wave{
   display:flex;
   width:200%;
-  animation: waveLoop 10s linear infinite;
+  animation:waveLoop 10s linear infinite;
 }
 
-.wave svg {
+.wave svg{
   width:50%;
   height:200px;
 }
 
-@keyframes waveLoop {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+@keyframes waveLoop{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
 
-/* 🔥 CURSOR GLOW */
-.cursor {
+/* CURSOR */
+.cursor{
   position:fixed;
   width:150px;
   height:150px;
-  background: radial-gradient(circle, rgba(56,189,248,0.3), transparent 60%);
+  background:radial-gradient(circle, rgba(56,189,248,0.3), transparent 60%);
   border-radius:50%;
   pointer-events:none;
   transform:translate(-50%,-50%);
   z-index:9999;
-  transition:0.15s;
 }
 
 </style>
@@ -186,27 +180,27 @@ body {
 
 <script>
 
-/* CURSOR */
+/* CURSOR FOLLOW */
 document.addEventListener("mousemove", e=>{
   cursor.style.left = e.clientX+"px";
   cursor.style.top = e.clientY+"px";
 });
 
-/* 🔥 CARD 3D TILT */
+/* CARD 3D FIXED */
 document.querySelectorAll(".card").forEach(card=>{
   card.addEventListener("mousemove", e=>{
     let rect = card.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    let rotateX = (y / rect.height - 0.5) * -20;
-    let rotateY = (x / rect.width - 0.5) * 20;
+    let rotateX = (y / rect.height - 0.5) * -15;
+    let rotateY = (x / rect.width - 0.5) * 15;
 
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   });
 
   card.addEventListener("mouseleave", ()=>{
-    card.style.transform = "rotateX(0) rotateY(0)";
+    card.style.transform = "rotateX(0) rotateY(0) scale(1)";
   });
 });
 
