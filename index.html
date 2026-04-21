@@ -3,52 +3,87 @@
 <head>
 <title>Hailo AI</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at 20% 30%, #60a5fa, transparent),
+              radial-gradient(circle at 80% 70%, #22c55e, transparent),
+              linear-gradient(120deg, #020617, #0f172a);
+  color: white;
 }
 
-/* HOMEPAGE */
-#home {
-  height: 100vh;
-  background: linear-gradient(120deg,#f8fafc,#e0f2fe);
-  display: flex;
-  flex-direction: column;
-}
-
+/* TOPBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
 }
 
+/* HERO */
 .hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .hero h1 {
-  font-size: 70px;
-  color: #3b82f6;
+  font-size: 80px;
+  background: linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 2px;
 }
 
+.hero p {
+  color: #cbd5f5;
+}
+
+/* BUTTONS */
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 8px;
-  background: #3b82f6;
+  border-radius: 30px;
+  background: linear-gradient(90deg,#38bdf8,#22c55e);
   color: white;
   cursor: pointer;
 }
 
-/* AUTH MODAL */
+/* CARDS (THE SQUARE THINGS) */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.card {
+  width: 260px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+.card h3 {
+  color: #38bdf8;
+}
+
+.card p {
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -63,7 +98,7 @@ button {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  text-align: center;
+  color: black;
 }
 
 input {
@@ -77,13 +112,11 @@ input {
   display: none;
   height: 100vh;
   background: #0f172a;
-  color: white;
 }
 
 .chat-box {
   height: 80%;
   padding: 20px;
-  overflow-y: auto;
 }
 
 .input-box {
@@ -103,7 +136,7 @@ input {
 
 <body>
 
-<!-- HOMEPAGE -->
+<!-- HOME -->
 <div id="home">
   <div class="topbar">
     <h2>Hailo</h2>
@@ -113,7 +146,26 @@ input {
   <div class="hero">
     <h1>hailo</h1>
     <p>Into the future of AI</p>
+    <br>
     <button onclick="openModal()">Start Now</button>
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards">
+    <div class="card" onclick="openModal()">
+      <h3>Start Now</h3>
+      <p>Jump into AI instantly and explore features.</p>
+    </div>
+
+    <div class="card" onclick="openModal()">
+      <h3>Explore AI</h3>
+      <p>Discover tools, models, and smart systems.</p>
+    </div>
+
+    <div class="card" onclick="openModal()">
+      <h3>Build Projects</h3>
+      <p>Create your own AI-powered applications.</p>
+    </div>
   </div>
 </div>
 
@@ -155,51 +207,46 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// MODAL
-window.openModal = () => document.getElementById("authBox").style.display = "flex";
-window.closeModal = () => document.getElementById("authBox").style.display = "none";
+window.openModal = () => authBox.style.display = "flex";
+window.closeModal = () => authBox.style.display = "none";
 
-// AUTH
 window.signup = async () => {
   try {
     await createUserWithEmailAndPassword(auth, email.value, password.value);
     alert("Signed up 🔥");
-  } catch (e) { alert(e.message); }
+  } catch(e){ alert(e.message); }
 };
 
 window.login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
     alert("Logged in ✅");
-  } catch (e) { alert(e.message); }
+  } catch(e){ alert(e.message); }
 };
 
 window.logout = () => signOut(auth);
 
-// REDIRECT LOGIC
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    home.style.display="none";
+    dashboard.style.display="block";
     closeModal();
   } else {
-    document.getElementById("home").style.display = "flex";
-    document.getElementById("dashboard").style.display = "none";
+    home.style.display="block";
+    dashboard.style.display="none";
   }
 });
 
-// CHAT
 window.sendMsg = () => {
   let text = msgInput.value;
-  if (!text) return;
+  if(!text) return;
 
   chatBox.innerHTML += `<div class="user">${text}</div>`;
-  setTimeout(() => {
+  setTimeout(()=>{
     chatBox.innerHTML += `<div class="bot">AI reply 🤖</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 500);
+  },500);
 
-  msgInput.value = "";
+  msgInput.value="";
 };
 
 </script>
