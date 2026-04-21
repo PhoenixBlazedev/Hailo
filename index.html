@@ -133,24 +133,10 @@ body{
   100%{transform:translateX(-50%);}
 }
 
-/* CURSOR */
-.cursor{
-  position:fixed;
-  width:150px;
-  height:150px;
-  background:radial-gradient(circle, rgba(56,189,248,0.3), transparent 60%);
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:9999;
-}
-
 </style>
 </head>
 
 <body>
-
-<div class="cursor" id="cursor"></div>
 
 <div class="bg">
   <span></span>
@@ -199,13 +185,7 @@ body{
 
 <script>
 
-/* CURSOR */
-document.addEventListener("mousemove", e=>{
-  cursor.style.left = e.clientX+"px";
-  cursor.style.top = e.clientY+"px";
-});
-
-/* PERFECT 3D TILT */
+/* STABLE 3D TILT */
 document.querySelectorAll(".card").forEach(card=>{
   let inner = card.querySelector(".inner");
 
