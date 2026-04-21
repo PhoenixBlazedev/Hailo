@@ -1,23 +1,102 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Hailo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
 <style>
-.header {
-font-family: Arial, sans-serif;
-font-size: 70px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.signin {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #38bdf8;
+  cursor: pointer;
+}
+
+.hero {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 60px;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #94a3b8;
+}
+
+.start-btn {
+  margin-top: 25px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #22c55e;
+  cursor: pointer;
+}
+
+.card {
+  margin: 40px auto;
+  width: 80%;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  text-align: center;
+}
+
 </style>
-
-  
 </head>
-<body>
-<div class = header>
-<h1>"The Era Of Technology"</h1> 
-<img src = "" alt = "LOGO">  
-</div>  
-  
-</body>
 
-  
+<body>
+
+<div class="header">
+  <div class="logo">Hailo.AI</div>
+  <button class="signin">Sign In</button>
+</div>
+
+<div class="hero">
+  <h1>The Era Of Technology</h1>
+  <p>Building the future with Artificial Intelligence</p>
+  <button class="start-btn">Get Started</button>
+</div>
+
+<div class="card">
+  <h2>Why Hailo?</h2>
+  <p>Fast. Smart. AI-powered solutions for everything.</p>
+</div>
+
+</body>
 </html>
-  
