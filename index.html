@@ -171,31 +171,67 @@ body {
   </div>
 </div>
 
-<script>
+<script type="module">
 
-function openModal() {
-  document.getElementById("loginModal").style.display = "flex";
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-function closeModal() {
-  document.getElementById("loginModal").style.display = "none";
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBrdZoD5fQivPTJAe8zeRmx9cFysGZW4K4",
+  authDomain: "hailo-11a4a.firebaseapp.com",
+  projectId: "hailo-11a4a",
+  storageBucket: "hailo-11a4a.firebasestorage.app",
+  messagingSenderId: "279653855334",
+  appId: "1:279653855334:web:7e9d5022070041346bfda7",
+  measurementId: "G-TQYZD1EF1T"
+};
 
-function login() {
-  alert("Logged in (demo only)");
-}
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-function startNow() {
-  alert("Starting AI experience 🚀");
-}
+// SIGNUP
+window.signup = function() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
 
-function apiAccess() {
-  alert("API access coming soon 👀");
-}
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Signed up 🔥"))
+    .catch(err => alert(err.message));
+};
 
-function scrollTopPage() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+// LOGIN
+window.login = function() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Logged in ✅"))
+    .catch(err => alert(err.message));
+};
+
+// LOGOUT
+window.logout = function() {
+  signOut(auth);
+  alert("Logged out");
+};
+
+// START BUTTON CHECK
+window.startNow = function() {
+  if (auth.currentUser) {
+    alert("Welcome " + auth.currentUser.email);
+  } else {
+    alert("Login first bro 😭");
+  }
+};
+
+// LISTENER
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User:", user.email);
+  } else {
+    console.log("No user");
+  }
+});
 
 </script>
 
