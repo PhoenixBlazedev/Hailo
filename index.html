@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hailo AI</title>
+<title>hailo AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -35,24 +35,7 @@ body::before {
   100% { transform: translate(200px,200px); }
 }
 
-/* WAVE */
-.wave {
-  position: absolute;
-  width: 200%;
-  height: 200px;
-  background: rgba(56,189,248,0.2);
-  border-radius: 50%;
-  top: 60%;
-  left: -50%;
-  animation: waveMove 8s infinite linear;
-}
-
-@keyframes waveMove {
-  from { transform: translateX(0); }
-  to { transform: translateX(50%); }
-}
-
-/* GLASS NAVBAR */
+/* NAVBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -110,6 +93,18 @@ button {
   transform: translateY(-10px);
 }
 
+/* WAVE */
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.wave-container svg {
+  width: 200%;
+  height: 200px;
+}
+
 /* MODAL */
 .modal {
   display: none;
@@ -155,9 +150,6 @@ input {
   flex: 1;
 }
 
-.user { text-align: right; }
-.bot { color: #38bdf8; }
-
 /* CURSOR GLOW */
 .cursor-glow {
   position: fixed;
@@ -169,17 +161,19 @@ input {
   transform: translate(-50%, -50%);
 }
 
+.user { text-align: right; }
+.bot { color: #38bdf8; }
+
 </style>
 </head>
 
 <body>
 
 <div class="cursor-glow" id="glow"></div>
-<div class="wave"></div>
 
 <div id="home">
   <div class="topbar">
-    <h2>Hailo</h2>
+    <h2>hailo</h2>
     <button onclick="openModal()">Sign In</button>
   </div>
 
@@ -191,15 +185,24 @@ input {
   </div>
 
   <div class="cards">
-    <div class="card" onclick="openModal()">
-      <h3>Start Now</h3>
-    </div>
-    <div class="card" onclick="openModal()">
-      <h3>Explore</h3>
-    </div>
-    <div class="card" onclick="openModal()">
-      <h3>Build</h3>
-    </div>
+    <div class="card" onclick="openModal()"><h3>Start Now</h3></div>
+    <div class="card" onclick="openModal()"><h3>Explore</h3></div>
+    <div class="card" onclick="openModal()"><h3>Build</h3></div>
+  </div>
+
+  <!-- REAL WAVE -->
+  <div class="wave-container">
+    <svg viewBox="0 0 1440 320">
+      <path fill="#38bdf8" fill-opacity="0.3">
+        <animate attributeName="d" dur="6s" repeatCount="indefinite"
+          values="
+          M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1380,181L1440,181L1440,320L0,320Z;
+          M0,192L60,186.7C120,181,240,171,360,154.7C480,139,600,117,720,128C840,139,960,181,1080,197.3C1200,213,1320,203,1380,197L1440,192L1440,320L0,320Z;
+          M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1380,181L1440,181L1440,320L0,320Z
+          ">
+        </animate>
+      </path>
+    </svg>
   </div>
 </div>
 
@@ -270,7 +273,6 @@ window.sendMsg = () => {
   msgInput.value="";
 };
 
-/* CURSOR EFFECT */
 document.addEventListener("mousemove",(e)=>{
   glow.style.left = e.clientX + "px";
   glow.style.top = e.clientY + "px";
