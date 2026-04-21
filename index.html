@@ -13,6 +13,28 @@ body {
   background: linear-gradient(120deg, #f8fbff, #e0f7ff);
   overflow-x: hidden;
   color: #0f172a;
+  position: relative;
+}
+
+/* BACKGROUND GLOW BLOBS (fixes plain look) */
+body::before, body::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(56,189,248,0.3), transparent);
+  filter: blur(120px);
+  z-index: -1;
+}
+
+body::before {
+  top: 0;
+  left: 0;
+}
+
+body::after {
+  bottom: 0;
+  right: 0;
 }
 
 /* NAVBAR */
@@ -24,7 +46,6 @@ body {
   background: rgba(255,255,255,0.4);
 }
 
-/* SIGN IN CLEAN */
 .topbar button {
   background: none;
   border: none;
@@ -44,7 +65,7 @@ body {
   color: #0284c7;
 }
 
-/* OUTLINED GLASS CARDS */
+/* CARDS */
 .cards {
   display: flex;
   justify-content: center;
@@ -54,35 +75,48 @@ body {
 
 .card {
   width: 260px;
-  padding: 40px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 25px;
   background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(56,189,248,0.3);
-  text-align: center;
   cursor: pointer;
-  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
-/* HOVER (APPLE STYLE GLOW) */
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 60px rgba(56,189,248,0.4);
-  border-color: rgba(56,189,248,0.6);
+/* FULL CARD HOVER (fix) */
+.card::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(56,189,248,0.3), transparent 60%);
+  opacity: 0;
+  transition: 0.4s;
 }
 
-/* SMOOTH WAVE (LAYERED) */
+.card:hover::before {
+  opacity: 1;
+}
+
+/* TEXT */
+.card h3 {
+  position: relative;
+  z-index: 2;
+}
+
+/* WAVE */
 .wave-container {
   position: absolute;
   bottom: 0;
   width: 100%;
-  overflow: hidden;
-  line-height: 0;
 }
 
 .wave-container svg {
-  position: relative;
-  display: block;
   width: 200%;
   height: 200px;
   animation: waveMove 12s linear infinite;
@@ -167,7 +201,7 @@ input {
     </div>
   </div>
 
-  <!-- CLEAN WAVE -->
+  <!-- WAVE -->
   <div class="wave-container">
     <svg viewBox="0 0 1440 320">
       <path fill="#38bdf8" fill-opacity="0.3"
@@ -175,6 +209,7 @@ input {
       </path>
     </svg>
   </div>
+
 </div>
 
 <div class="modal" id="authBox">
