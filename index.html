@@ -7,26 +7,58 @@
 
 <style>
 
+/* BASE */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(120deg, #f8fbff, #e0f7ff);
   overflow-x: hidden;
   color: #0f172a;
   position: relative;
+  background: #f8fbff;
 }
 
-/* BACKGROUND GLOW */
-body::before {
-  content: "";
+/* 🔥 APPLE STYLE MESH BACKGROUND */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.bg span {
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(56,189,248,0.3), transparent);
+  border-radius: 50%;
   filter: blur(120px);
-  top: 0;
-  left: 0;
-  z-index: -1;
+  opacity: 0.5;
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.bg span:nth-child(1) {
+  background: #38bdf8;
+  top: -100px;
+  left: -100px;
+}
+
+.bg span:nth-child(2) {
+  background: #7dd3fc;
+  bottom: -100px;
+  right: -100px;
+  animation-delay: 3s;
+}
+
+.bg span:nth-child(3) {
+  background: #bae6fd;
+  top: 40%;
+  left: 60%;
+  animation-delay: 6s;
+}
+
+@keyframes float {
+  0% { transform: translate(0,0) scale(1); }
+  100% { transform: translate(80px,60px) scale(1.2); }
 }
 
 /* NAVBAR */
@@ -35,9 +67,7 @@ body::before {
   justify-content: space-between;
   padding: 20px 40px;
   backdrop-filter: blur(12px);
-  background: rgba(255,255,255,0.4);
-  position: relative;
-  z-index: 5;
+  background: rgba(255,255,255,0.5);
 }
 
 .topbar button {
@@ -51,13 +81,16 @@ body::before {
 .hero {
   text-align: center;
   margin-top: 80px;
-  position: relative;
-  z-index: 5;
 }
 
 .hero h1 {
   font-size: 80px;
   color: #0284c7;
+}
+
+.hero p {
+  font-size: 18px;
+  opacity: 0.7;
 }
 
 /* CARDS */
@@ -66,60 +99,33 @@ body::before {
   justify-content: center;
   gap: 40px;
   margin-top: 100px;
-  position: relative;
-  z-index: 5; /* ABOVE WAVE */
 }
 
 .card {
   width: 260px;
   height: 180px;
   border-radius: 25px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(25px);
   border: 1px solid rgba(56,189,248,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
   transition: 0.3s;
 }
 
-/* REAL HOVER FIX */
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 0 50px rgba(56,189,248,0.5);
+  box-shadow: 0 0 40px rgba(56,189,248,0.4);
 }
 
-/* INNER GLOW FOLLOW */
-.card::before {
-  content: "";
-  position: absolute;
-  width: 150%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(56,189,248,0.4), transparent 60%);
-  opacity: 0;
-  transition: 0.4s;
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-/* TEXT */
-.card h3 {
-  position: relative;
-  z-index: 2;
-}
-
-/* 🌊 PERFECT INFINITE WAVE */
+/* 🌊 WAVE */
 .wave-container {
   position: absolute;
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  z-index: 1;
 }
 
 .wave {
@@ -138,168 +144,49 @@ body::before {
   100% { transform: translateX(-50%); }
 }
 
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.3);
-  justify-content: center;
-  align-items: center;
-}
-
-.box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-}
-
-/* DASHBOARD */
-#dashboard {
-  display: none;
-  height: 100vh;
-  background: #0f172a;
-  color: white;
-}
-
-.chat-box {
-  height: 80%;
-  padding: 20px;
-}
-
-.input-box {
-  display: flex;
-  padding: 10px;
-}
-
-.input-box input {
-  flex: 1;
-}
-
-.user { text-align: right; }
-.bot { color: #38bdf8; }
-
 </style>
 </head>
 
 <body>
 
-<div id="home">
-
-  <div class="topbar">
-    <h2>hailo</h2>
-    <button onclick="openModal()">Sign In</button>
-  </div>
-
-  <div class="hero">
-    <h1>hailo</h1>
-    <p>Into the future of AI</p>
-  </div>
-
-  <div class="cards">
-    <div class="card" onclick="openModal()">
-      <h3>Start</h3>
-    </div>
-
-    <div class="card" onclick="openModal()">
-      <h3>Explore</h3>
-    </div>
-  </div>
-
-  <!-- 🔥 REAL INFINITE WAVE -->
-  <div class="wave-container">
-    <div class="wave">
-      <svg viewBox="0 0 1440 320">
-        <path fill="#38bdf8" fill-opacity="0.3"
-          d="M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1440,181L1440,320L0,320Z">
-        </path>
-      </svg>
-
-      <svg viewBox="0 0 1440 320">
-        <path fill="#38bdf8" fill-opacity="0.3"
-          d="M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1440,181L1440,320L0,320Z">
-        </path>
-      </svg>
-    </div>
-  </div>
-
+<!-- 🔥 BACKGROUND -->
+<div class="bg">
+  <span></span>
+  <span></span>
+  <span></span>
 </div>
 
-<div class="modal" id="authBox">
-  <div class="box">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="login()">Login</button>
-    <button onclick="closeModal()">Close</button>
-  </div>
+<div class="topbar">
+  <h2>hailo</h2>
+  <button>Sign In</button>
 </div>
 
-<div id="dashboard">
-  <button onclick="logout()">Logout</button>
-  <div class="chat-box" id="chatBox"></div>
-  <div class="input-box">
-    <input id="msgInput">
-    <button onclick="sendMsg()">Send</button>
-  </div>
+<div class="hero">
+  <h1>hailo</h1>
+  <p>Into the Era of Technology</p>
 </div>
 
-<script type="module">
+<div class="cards">
+  <div class="card"><h3>Start</h3></div>
+  <div class="card"><h3>Explore</h3></div>
+</div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+<!-- 🌊 WAVE -->
+<div class="wave-container">
+  <div class="wave">
+    <svg viewBox="0 0 1440 320">
+      <path fill="#38bdf8" fill-opacity="0.3"
+        d="M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1440,181L1440,320L0,320Z">
+      </path>
+    </svg>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBrdZoD5fQivPTJAe8zeRmx9cFysGZW4K4",
-  authDomain: "hailo-11a4a.firebaseapp.com",
-  projectId: "hailo-11a4a"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-window.openModal = () => authBox.style.display = "flex";
-window.closeModal = () => authBox.style.display = "none";
-
-window.signup = async () => {
-  try { await createUserWithEmailAndPassword(auth,email.value,password.value); alert("Signed up"); }
-  catch(e){ alert(e.message); }
-};
-
-window.login = async () => {
-  try { await signInWithEmailAndPassword(auth,email.value,password.value); alert("Logged in"); }
-  catch(e){ alert(e.message); }
-};
-
-window.logout = () => signOut(auth);
-
-onAuthStateChanged(auth,(user)=>{
-  if(user){
-    home.style.display="none";
-    dashboard.style.display="block";
-    closeModal();
-  } else {
-    home.style.display="block";
-    dashboard.style.display="none";
-  }
-});
-
-window.sendMsg = () => {
-  let text = msgInput.value;
-  if(!text) return;
-  chatBox.innerHTML += `<div class="user">${text}</div>`;
-  setTimeout(()=>chatBox.innerHTML += `<div class="bot">AI 🤖</div>`,500);
-  msgInput.value="";
-};
-
-</script>
+    <svg viewBox="0 0 1440 320">
+      <path fill="#38bdf8" fill-opacity="0.3"
+        d="M0,160L60,170C120,180,240,200,360,186.7C480,173,600,127,720,122.7C840,117,960,149,1080,165.3C1200,181,1320,181,1440,181L1440,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+</div>
 
 </body>
 </html>
