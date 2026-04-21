@@ -1,137 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hailo</title>
+<title>Hailo AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: 'Inter', sans-serif;
-  height: 100vh;
-  background: linear-gradient(120deg, #f8fafc, #e0f2fe);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #0f172a;
+  margin: 0;
+  background: #0f172a;
+  color: white;
 }
 
-/* TOPBAR */
-.topbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  font-size: 14px;
-  color: #64748b;
-}
-
-.logo {
-  font-weight: 600;
-  color: #3b82f6;
-  cursor: pointer;
-}
-
-/* HERO */
-.hero {
+/* AUTH PAGE */
+#authPage {
   text-align: center;
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
-.hero h1 {
-  font-size: 80px;
-  font-weight: 600;
-  color: #3b82f6;
-}
-
-.hero h2 {
-  margin-top: 10px;
-  font-weight: 400;
-  color: #334155;
-}
-
-/* CARDS */
-.cards {
-  display: flex;
-  gap: 30px;
-  margin-top: 70px;
-}
-
-.card {
-  width: 300px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-8px);
-}
-
-.card h3 {
-  color: #2563eb;
-}
-
-.card p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #475569;
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-box {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  width: 300px;
-  position: relative;
-}
-
-.modal-box input {
-  width: 100%;
-  margin: 10px 0;
+input {
   padding: 10px;
+  margin: 10px;
+  width: 250px;
+  border-radius: 6px;
+  border: none;
 }
 
-.modal-box button {
+button {
   padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
   background: #3b82f6;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
-.close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  cursor: pointer;
-  font-size: 20px;
+/* DASHBOARD */
+#dashboard {
+  display: none;
+  height: 100vh;
+}
+
+/* TOP BAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: #1e293b;
+}
+
+/* CHAT */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 50px);
+}
+
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.msg {
+  margin: 10px 0;
+}
+
+.user {
+  text-align: right;
+}
+
+.bot {
+  text-align: left;
+  color: #38bdf8;
+}
+
+.input-box {
+  display: flex;
+  padding: 10px;
+  background: #1e293b;
+}
+
+.input-box input {
+  flex: 1;
+  margin: 0;
 }
 
 </style>
@@ -139,35 +94,27 @@ body {
 
 <body>
 
-<div class="topbar">
-  <div class="logo" onclick="scrollTopPage()">hailo</div>
-  <div onclick="openModal()" style="cursor:pointer;">Sign In</div>
+<div id="authPage">
+  <h1>Hailo AI</h1>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
 </div>
 
-<div class="hero">
-  <h1>hailo</h1>
-  <h2>Into the unknown</h2>
-</div>
-
-<div class="cards">
-  <div class="card" onclick="startNow()">
-    <h3>Start Now</h3>
-    <p>Free access to AI. Experience intelligent systems.</p>
+<div id="dashboard">
+  <div class="topbar">
+    <div>Hailo AI</div>
+    <button onclick="logout()">Logout</button>
   </div>
 
-  <div class="card" onclick="apiAccess()">
-    <h3>Access API</h3>
-    <p>Build apps with powerful AI models.</p>
-  </div>
-</div>
+  <div class="chat-container">
+    <div class="chat-box" id="chatBox"></div>
 
-<div class="modal" id="loginModal">
-  <div class="modal-box">
-    <span class="close" onclick="closeModal()">×</span>
-    <h2>Sign In</h2>
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <div class="input-box">
+      <input id="msgInput" placeholder="Ask something...">
+      <button onclick="sendMsg()">Send</button>
+    </div>
   </div>
 </div>
 
@@ -175,6 +122,7 @@ body {
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBrdZoD5fQivPTJAe8zeRmx9cFysGZW4K4",
@@ -182,56 +130,71 @@ const firebaseConfig = {
   projectId: "hailo-11a4a",
   storageBucket: "hailo-11a4a.firebasestorage.app",
   messagingSenderId: "279653855334",
-  appId: "1:279653855334:web:7e9d5022070041346bfda7",
-  measurementId: "G-TQYZD1EF1T"
+  appId: "1:279653855334:web:7e9d5022070041346bfda7"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// SIGNUP
-window.signup = function() {
+window.signup = async function() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Signed up 🔥"))
-    .catch(err => alert(err.message));
+  try {
+    let userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+    await setDoc(doc(db, "users", userCred.user.uid), {
+      email: email,
+      createdAt: new Date()
+    });
+
+    alert("Account created 🔥");
+  } catch (e) {
+    alert(e.message);
+  }
 };
 
-// LOGIN
-window.login = function() {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Logged in ✅"))
-    .catch(err => alert(err.message));
+window.login = async function() {
+  try {
+    await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
+    alert("Logged in ✅");
+  } catch (e) {
+    alert(e.message);
+  }
 };
 
-// LOGOUT
 window.logout = function() {
   signOut(auth);
-  alert("Logged out");
 };
 
-// START BUTTON CHECK
-window.startNow = function() {
-  if (auth.currentUser) {
-    alert("Welcome " + auth.currentUser.email);
-  } else {
-    alert("Login first bro 😭");
-  }
-};
-
-// LISTENER
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User:", user.email);
+    document.getElementById("authPage").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
   } else {
-    console.log("No user");
+    document.getElementById("authPage").style.display = "block";
+    document.getElementById("dashboard").style.display = "none";
   }
 });
+
+window.sendMsg = function() {
+  let input = document.getElementById("msgInput");
+  let text = input.value;
+
+  if (!text) return;
+
+  let chatBox = document.getElementById("chatBox");
+
+  chatBox.innerHTML += `<div class="msg user">${text}</div>`;
+
+  setTimeout(() => {
+    chatBox.innerHTML += `<div class="msg bot">AI: This is a demo response 🤖</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 500);
+
+  input.value = "";
+};
 
 </script>
 
