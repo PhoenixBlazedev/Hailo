@@ -3,7 +3,7 @@
 <head>
 <title>Hailo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,13 +14,13 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   height: 100vh;
-  background: linear-gradient(120deg, #eef2ff, #dbeafe);
+  background: linear-gradient(120deg, #f8fafc, #e0f2fe);
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 /* TOP BAR */
@@ -29,59 +29,58 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
+  font-size: 14px;
+  color: #64748b;
 }
 
 .logo {
-  font-weight: 700;
-  font-size: 22px;
-  color: #2563eb;
-}
-
-.nav {
-  font-size: 14px;
-  color: #334155;
+  font-weight: 600;
+  color: #3b82f6;
 }
 
 /* HERO */
 .hero {
   text-align: center;
-  margin-top: 60px;
+  margin-top: 80px;
 }
 
 .hero h1 {
-  font-size: 70px;
+  font-size: 80px;
+  font-weight: 600;
   color: #3b82f6;
+  letter-spacing: -2px;
 }
 
 .hero h2 {
   margin-top: 10px;
-  font-weight: 500;
-  color: #475569;
+  font-weight: 400;
+  color: #334155;
 }
 
 /* CARDS */
 .cards {
   display: flex;
   gap: 30px;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .card {
-  width: 280px;
-  padding: 25px;
+  width: 300px;
+  padding: 30px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
 }
 
 .card h3 {
   color: #2563eb;
+  font-weight: 600;
 }
 
 .card p {
@@ -96,24 +95,24 @@ body {
 <body>
 
 <div class="topbar">
-  <div class="logo">Hailo</div>
-  <div class="nav">Get App</div>
+  <div class="logo">hailo</div>
+  <div>Get App &nbsp;&nbsp; EN</div>
 </div>
 
 <div class="hero">
   <h1>hailo</h1>
-  <h2>Into the future</h2>
+  <h2>Into the unknown</h2>
 </div>
 
 <div class="cards">
   <div class="card">
     <h3>Start Now</h3>
-    <p>Free access to AI tools. Experience smart systems.</p>
+    <p>Free access to AI. Experience intelligent systems.</p>
   </div>
 
   <div class="card">
     <h3>Access API</h3>
-    <p>Build powerful apps using modern AI models.</p>
+    <p>Build apps with powerful AI models.</p>
   </div>
 </div>
 
