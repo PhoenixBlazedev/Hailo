@@ -7,7 +7,7 @@
 
 <style>
 
-body {
+body{
   margin:0;
   font-family:'Poppins',sans-serif;
   overflow-x:hidden;
@@ -15,15 +15,15 @@ body {
   color:#0f172a;
 }
 
-/* BACKGROUND */
-.bg {
+/* BG */
+.bg{
   position:fixed;
   width:100%;
   height:100%;
   z-index:-2;
 }
 
-.bg span {
+.bg span{
   position:absolute;
   width:500px;
   height:500px;
@@ -41,7 +41,7 @@ body {
   100%{transform:translate(80px,60px);}
 }
 
-/* NAVBAR */
+/* NAV */
 .topbar{
   display:flex;
   justify-content:space-between;
@@ -89,16 +89,18 @@ body {
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  transition:all 0.25s ease;
   transform-style:preserve-3d;
-  transition:box-shadow 0.2s;
 }
 
+/* 🔥 PURE CSS HOVER (NO JS BUGS) */
 .card:hover{
-  box-shadow:0 0 50px rgba(56,189,248,0.5);
+  transform:rotateX(8deg) rotateY(-8deg) scale(1.05);
+  box-shadow:0 20px 60px rgba(56,189,248,0.4);
 }
 
 .card h3{
-  transform:translateZ(40px);
+  transform:translateZ(30px);
 }
 
 /* WAVE */
@@ -180,28 +182,10 @@ body {
 
 <script>
 
-/* CURSOR FOLLOW */
+/* CURSOR */
 document.addEventListener("mousemove", e=>{
   cursor.style.left = e.clientX+"px";
   cursor.style.top = e.clientY+"px";
-});
-
-/* CARD 3D FIXED */
-document.querySelectorAll(".card").forEach(card=>{
-  card.addEventListener("mousemove", e=>{
-    let rect = card.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-
-    let rotateX = (y / rect.height - 0.5) * -15;
-    let rotateY = (x / rect.width - 0.5) * 15;
-
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-  });
-
-  card.addEventListener("mouseleave", ()=>{
-    card.style.transform = "rotateX(0) rotateY(0) scale(1)";
-  });
 });
 
 </script>
