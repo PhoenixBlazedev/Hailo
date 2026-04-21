@@ -10,10 +10,33 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at 20% 30%, #60a5fa, transparent),
-              radial-gradient(circle at 80% 70%, #22c55e, transparent),
-              linear-gradient(120deg, #020617, #0f172a);
-  color: white;
+  background: linear-gradient(120deg, #f8fbff, #e0f7ff);
+  overflow-x: hidden;
+  position: relative;
+  color: #0f172a;
+}
+
+/* CURVY BLUR BACKGROUND */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(56,189,248,0.4), transparent 70%);
+  filter: blur(120px);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+body::before {
+  top: -100px;
+  left: -100px;
+}
+
+body::after {
+  bottom: -100px;
+  right: -100px;
 }
 
 /* TOPBAR */
@@ -31,17 +54,16 @@ body {
 
 .hero h1 {
   font-size: 80px;
-  background: linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa);
-  -webkit-background-clip: text;
-  color: transparent;
-  letter-spacing: 2px;
+  font-weight: 600;
+  color: #0284c7;
+  letter-spacing: -1px;
 }
 
 .hero p {
-  color: #cbd5f5;
+  color: #334155;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button {
   padding: 12px 24px;
   border: none;
@@ -51,7 +73,7 @@ button {
   cursor: pointer;
 }
 
-/* CARDS (THE SQUARE THINGS) */
+/* CARDS */
 .cards {
   display: flex;
   justify-content: center;
@@ -63,24 +85,24 @@ button {
   width: 260px;
   padding: 25px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.6);
   backdrop-filter: blur(15px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   transition: 0.3s;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-8px) scale(1.03);
+  transform: translateY(-8px);
 }
 
 .card h3 {
-  color: #38bdf8;
+  color: #0284c7;
 }
 
 .card p {
   font-size: 14px;
-  color: #cbd5f5;
+  color: #334155;
 }
 
 /* MODAL */
@@ -89,7 +111,7 @@ button {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.4);
   justify-content: center;
   align-items: center;
 }
@@ -98,7 +120,6 @@ button {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  color: black;
 }
 
 input {
@@ -112,6 +133,7 @@ input {
   display: none;
   height: 100vh;
   background: #0f172a;
+  color: white;
 }
 
 .chat-box {
@@ -136,7 +158,6 @@ input {
 
 <body>
 
-<!-- HOME -->
 <div id="home">
   <div class="topbar">
     <h2>Hailo</h2>
@@ -150,26 +171,24 @@ input {
     <button onclick="openModal()">Start Now</button>
   </div>
 
-  <!-- CARDS -->
   <div class="cards">
     <div class="card" onclick="openModal()">
       <h3>Start Now</h3>
-      <p>Jump into AI instantly and explore features.</p>
+      <p>Jump into AI instantly.</p>
     </div>
 
     <div class="card" onclick="openModal()">
-      <h3>Explore AI</h3>
-      <p>Discover tools, models, and smart systems.</p>
+      <h3>Explore</h3>
+      <p>Discover AI tools.</p>
     </div>
 
     <div class="card" onclick="openModal()">
-      <h3>Build Projects</h3>
-      <p>Create your own AI-powered applications.</p>
+      <h3>Build</h3>
+      <p>Create your own AI apps.</p>
     </div>
   </div>
 </div>
 
-<!-- AUTH -->
 <div class="modal" id="authBox">
   <div class="box">
     <h3>Login / Signup</h3>
@@ -181,7 +200,6 @@ input {
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard">
   <button onclick="logout()">Logout</button>
 
