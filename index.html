@@ -23,7 +23,7 @@ body {
   color: #0f172a;
 }
 
-/* TOP BAR */
+/* TOPBAR */
 .topbar {
   width: 100%;
   display: flex;
@@ -36,6 +36,7 @@ body {
 .logo {
   font-weight: 600;
   color: #3b82f6;
+  cursor: pointer;
 }
 
 /* HERO */
@@ -48,7 +49,6 @@ body {
   font-size: 80px;
   font-weight: 600;
   color: #3b82f6;
-  letter-spacing: -2px;
 }
 
 .hero h2 {
@@ -71,7 +71,8 @@ body {
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(20px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -80,7 +81,6 @@ body {
 
 .card h3 {
   color: #2563eb;
-  font-weight: 600;
 }
 
 .card p {
@@ -89,14 +89,59 @@ body {
   color: #475569;
 }
 
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 300px;
+  position: relative;
+}
+
+.modal-box input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.modal-box button {
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="topbar">
-  <div class="logo">hailo</div>
-  <div>Get App &nbsp;&nbsp; EN</div>
+  <div class="logo" onclick="scrollTopPage()">hailo</div>
+  <div onclick="openModal()" style="cursor:pointer;">Sign In</div>
 </div>
 
 <div class="hero">
@@ -105,16 +150,54 @@ body {
 </div>
 
 <div class="cards">
-  <div class="card">
-    <button <a href ='#'>Start Now</button>
+  <div class="card" onclick="startNow()">
+    <h3>Start Now</h3>
     <p>Free access to AI. Experience intelligent systems.</p>
   </div>
 
-  <div class="card">
+  <div class="card" onclick="apiAccess()">
     <h3>Access API</h3>
     <p>Build apps with powerful AI models.</p>
   </div>
 </div>
+
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2>Sign In</h2>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+
+function openModal() {
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
+function login() {
+  alert("Logged in (demo only)");
+}
+
+function startNow() {
+  alert("Starting AI experience 🚀");
+}
+
+function apiAccess() {
+  alert("API access coming soon 👀");
+}
+
+function scrollTopPage() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+</script>
 
 </body>
 </html>
