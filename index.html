@@ -8,113 +8,136 @@
 <style>
 
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
-  background: #0f172a;
-  color: white;
+  font-family: 'Inter', sans-serif;
 }
 
-/* AUTH PAGE */
-#authPage {
-  text-align: center;
-  margin-top: 100px;
+/* HOMEPAGE */
+#home {
+  height: 100vh;
+  background: linear-gradient(120deg,#f8fafc,#e0f2fe);
+  display: flex;
+  flex-direction: column;
 }
 
-input {
-  padding: 10px;
-  margin: 10px;
-  width: 250px;
-  border-radius: 6px;
-  border: none;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 70px;
+  color: #3b82f6;
 }
 
 button {
   padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 6px;
   border: none;
+  border-radius: 8px;
   background: #3b82f6;
   color: white;
+  cursor: pointer;
+}
+
+/* AUTH MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
 }
 
 /* DASHBOARD */
 #dashboard {
   display: none;
   height: 100vh;
-}
-
-/* TOP BAR */
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background: #1e293b;
-}
-
-/* CHAT */
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 50px);
+  background: #0f172a;
+  color: white;
 }
 
 .chat-box {
-  flex: 1;
+  height: 80%;
   padding: 20px;
   overflow-y: auto;
-}
-
-.msg {
-  margin: 10px 0;
-}
-
-.user {
-  text-align: right;
-}
-
-.bot {
-  text-align: left;
-  color: #38bdf8;
 }
 
 .input-box {
   display: flex;
   padding: 10px;
-  background: #1e293b;
 }
 
 .input-box input {
   flex: 1;
-  margin: 0;
 }
+
+.user { text-align: right; }
+.bot { color: #38bdf8; }
 
 </style>
 </head>
 
 <body>
 
-<div id="authPage">
-  <h1>Hailo AI</h1>
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="signup()">Sign Up</button>
-  <button onclick="login()">Login</button>
-</div>
-
-<div id="dashboard">
+<!-- HOMEPAGE -->
+<div id="home">
   <div class="topbar">
-    <div>Hailo AI</div>
-    <button onclick="logout()">Logout</button>
+    <h2>Hailo</h2>
+    <button onclick="openModal()">Sign In</button>
   </div>
 
-  <div class="chat-container">
-    <div class="chat-box" id="chatBox"></div>
+  <div class="hero">
+    <h1>hailo</h1>
+    <p>Into the future of AI</p>
+    <button onclick="openModal()">Start Now</button>
+  </div>
+</div>
 
-    <div class="input-box">
-      <input id="msgInput" placeholder="Ask something...">
-      <button onclick="sendMsg()">Send</button>
-    </div>
+<!-- AUTH -->
+<div class="modal" id="authBox">
+  <div class="box">
+    <h3>Login / Signup</h3>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Login</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <button onclick="logout()">Logout</button>
+
+  <div class="chat-box" id="chatBox"></div>
+
+  <div class="input-box">
+    <input id="msgInput">
+    <button onclick="sendMsg()">Send</button>
   </div>
 </div>
 
@@ -122,78 +145,61 @@ button {
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBrdZoD5fQivPTJAe8zeRmx9cFysGZW4K4",
   authDomain: "hailo-11a4a.firebaseapp.com",
-  projectId: "hailo-11a4a",
-  storageBucket: "hailo-11a4a.firebasestorage.app",
-  messagingSenderId: "279653855334",
-  appId: "1:279653855334:web:7e9d5022070041346bfda7"
+  projectId: "hailo-11a4a"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-window.signup = async function() {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
+// MODAL
+window.openModal = () => document.getElementById("authBox").style.display = "flex";
+window.closeModal = () => document.getElementById("authBox").style.display = "none";
 
+// AUTH
+window.signup = async () => {
   try {
-    let userCred = await createUserWithEmailAndPassword(auth, email, password);
-
-    await setDoc(doc(db, "users", userCred.user.uid), {
-      email: email,
-      createdAt: new Date()
-    });
-
-    alert("Account created 🔥");
-  } catch (e) {
-    alert(e.message);
-  }
+    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    alert("Signed up 🔥");
+  } catch (e) { alert(e.message); }
 };
 
-window.login = async function() {
+window.login = async () => {
   try {
-    await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
+    await signInWithEmailAndPassword(auth, email.value, password.value);
     alert("Logged in ✅");
-  } catch (e) {
-    alert(e.message);
-  }
+  } catch (e) { alert(e.message); }
 };
 
-window.logout = function() {
-  signOut(auth);
-};
+window.logout = () => signOut(auth);
 
+// REDIRECT LOGIC
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.getElementById("authPage").style.display = "none";
+    document.getElementById("home").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
+    closeModal();
   } else {
-    document.getElementById("authPage").style.display = "block";
+    document.getElementById("home").style.display = "flex";
     document.getElementById("dashboard").style.display = "none";
   }
 });
 
-window.sendMsg = function() {
-  let input = document.getElementById("msgInput");
-  let text = input.value;
-
+// CHAT
+window.sendMsg = () => {
+  let text = msgInput.value;
   if (!text) return;
 
-  let chatBox = document.getElementById("chatBox");
-
-  chatBox.innerHTML += `<div class="msg user">${text}</div>`;
-
+  chatBox.innerHTML += `<div class="user">${text}</div>`;
   setTimeout(() => {
-    chatBox.innerHTML += `<div class="msg bot">AI: This is a demo response 🤖</div>`;
+    chatBox.innerHTML += `<div class="bot">AI reply 🤖</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   }, 500);
 
-  input.value = "";
+  msgInput.value = "";
 };
 
 </script>
