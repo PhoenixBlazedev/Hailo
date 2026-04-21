@@ -16,34 +16,51 @@ body {
   color: #0f172a;
 }
 
-/* CURVY BLUR BACKGROUND */
-body::before,
-body::after {
+/* GLOW MESH */
+body::before {
   content: "";
-  position: absolute;
-  width: 600px;
-  height: 600px;
+  position: fixed;
+  width: 800px;
+  height: 800px;
   background: radial-gradient(circle, rgba(56,189,248,0.4), transparent 70%);
-  filter: blur(120px);
-  border-radius: 50%;
+  filter: blur(150px);
+  top: -200px;
+  left: -200px;
+  animation: moveGlow 10s infinite alternate;
   z-index: -1;
 }
 
-body::before {
-  top: -100px;
-  left: -100px;
+@keyframes moveGlow {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(200px,200px); }
 }
 
-body::after {
-  bottom: -100px;
-  right: -100px;
+/* WAVE */
+.wave {
+  position: absolute;
+  width: 200%;
+  height: 200px;
+  background: rgba(56,189,248,0.2);
+  border-radius: 50%;
+  top: 60%;
+  left: -50%;
+  animation: waveMove 8s infinite linear;
 }
 
-/* TOPBAR */
+@keyframes waveMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+
+/* GLASS NAVBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.4);
+  position: sticky;
+  top: 0;
 }
 
 /* HERO */
@@ -54,9 +71,7 @@ body::after {
 
 .hero h1 {
   font-size: 80px;
-  font-weight: 600;
   color: #0284c7;
-  letter-spacing: -1px;
 }
 
 .hero p {
@@ -87,22 +102,12 @@ button {
   border-radius: 20px;
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(15px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   transition: 0.3s;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-}
-
-.card h3 {
-  color: #0284c7;
-}
-
-.card p {
-  font-size: 14px;
-  color: #334155;
+  transform: translateY(-10px);
 }
 
 /* MODAL */
@@ -153,10 +158,24 @@ input {
 .user { text-align: right; }
 .bot { color: #38bdf8; }
 
+/* CURSOR GLOW */
+.cursor-glow {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(56,189,248,0.3), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 </style>
 </head>
 
 <body>
+
+<div class="cursor-glow" id="glow"></div>
+<div class="wave"></div>
 
 <div id="home">
   <div class="topbar">
@@ -174,24 +193,18 @@ input {
   <div class="cards">
     <div class="card" onclick="openModal()">
       <h3>Start Now</h3>
-      <p>Jump into AI instantly.</p>
     </div>
-
     <div class="card" onclick="openModal()">
       <h3>Explore</h3>
-      <p>Discover AI tools.</p>
     </div>
-
     <div class="card" onclick="openModal()">
       <h3>Build</h3>
-      <p>Create your own AI apps.</p>
     </div>
   </div>
 </div>
 
 <div class="modal" id="authBox">
   <div class="box">
-    <h3>Login / Signup</h3>
     <input type="email" id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Password">
     <button onclick="signup()">Sign Up</button>
@@ -202,9 +215,7 @@ input {
 
 <div id="dashboard">
   <button onclick="logout()">Logout</button>
-
   <div class="chat-box" id="chatBox"></div>
-
   <div class="input-box">
     <input id="msgInput">
     <button onclick="sendMsg()">Send</button>
@@ -229,17 +240,13 @@ window.openModal = () => authBox.style.display = "flex";
 window.closeModal = () => authBox.style.display = "none";
 
 window.signup = async () => {
-  try {
-    await createUserWithEmailAndPassword(auth, email.value, password.value);
-    alert("Signed up 🔥");
-  } catch(e){ alert(e.message); }
+  try { await createUserWithEmailAndPassword(auth,email.value,password.value); alert("Signed up"); }
+  catch(e){ alert(e.message); }
 };
 
 window.login = async () => {
-  try {
-    await signInWithEmailAndPassword(auth, email.value, password.value);
-    alert("Logged in ✅");
-  } catch(e){ alert(e.message); }
+  try { await signInWithEmailAndPassword(auth,email.value,password.value); alert("Logged in"); }
+  catch(e){ alert(e.message); }
 };
 
 window.logout = () => signOut(auth);
@@ -258,14 +265,16 @@ onAuthStateChanged(auth,(user)=>{
 window.sendMsg = () => {
   let text = msgInput.value;
   if(!text) return;
-
   chatBox.innerHTML += `<div class="user">${text}</div>`;
-  setTimeout(()=>{
-    chatBox.innerHTML += `<div class="bot">AI reply 🤖</div>`;
-  },500);
-
+  setTimeout(()=>chatBox.innerHTML += `<div class="bot">AI 🤖</div>`,500);
   msgInput.value="";
 };
+
+/* CURSOR EFFECT */
+document.addEventListener("mousemove",(e)=>{
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+});
 
 </script>
 
