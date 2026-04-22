@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sign In - hailo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f8fbff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.container{
+  width:350px;
+  padding:30px;
+  border-radius:20px;
+  background:white;
+  box-shadow:0 10px 40px rgba(0,0,0,0.1);
+}
+
+h2{
+  text-align:center;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#0ea5e9;
+  color:white;
+  cursor:pointer;
+}
+
+.switch{
+  text-align:center;
+  margin-top:10px;
+  cursor:pointer;
+  color:#0ea5e9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2 id="formTitle">Login</h2>
+
+  <div id="loginForm">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Login</button>
+  </div>
+
+  <div id="signupForm" style="display:none;">
+    <input type="text" placeholder="Name">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <input type="text" placeholder="Enter OTP" id="otpField" style="display:none;">
+    <button id="verifyBtn" style="display:none;">Verify & Register</button>
+  </div>
+
+  <div class="switch" onclick="toggleForm()">Switch to Sign Up</div>
+
+</div>
+
+<script>
+let isLogin = true;
+
+function toggleForm(){
+  isLogin = !isLogin;
+
+  document.getElementById("loginForm").style.display = isLogin ? "block" : "none";
+  document.getElementById("signupForm").style.display = isLogin ? "none" : "block";
+  document.getElementById("formTitle").innerText = isLogin ? "Login" : "Sign Up";
+
+  document.querySelector(".switch").innerText =
+    isLogin ? "Switch to Sign Up" : "Switch to Login";
+}
+
+function sendOTP(){
+  alert("OTP sent to email (backend needed)");
+
+  document.getElementById("otpField").style.display = "block";
+  document.getElementById("verifyBtn").style.display = "block";
+}
+</script>
+
+</body>
+</html>
