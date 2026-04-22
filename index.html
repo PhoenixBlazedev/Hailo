@@ -4,6 +4,7 @@
 <title>hailo AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
 
@@ -44,10 +45,9 @@ body{
 /* NAV */
 .topbar{
   display:flex;
-  justify-content:space-between;
-  padding:20px 40px;
+  justify-content:center;
+  padding:20px;
   backdrop-filter:blur(15px);
-  -webkit-backdrop-filter:blur(15px);
   background:rgba(255,255,255,0.5);
 }
 
@@ -83,17 +83,16 @@ body{
 
 .card{
   width:260px;
-  height:180px;
+  height:200px;
   border-radius:25px;
-
-  /* 🔥 REAL GLASS */
   background:rgba(255,255,255,0.1);
   backdrop-filter:blur(25px);
   -webkit-backdrop-filter:blur(25px);
-
   border:1px solid rgba(255,255,255,0.3);
   cursor:pointer;
   transition:all 0.3s ease;
+  padding:20px;
+  text-align:center;
 }
 
 .card:hover{
@@ -102,12 +101,15 @@ body{
 }
 
 .card h3{
-  text-align:center;
-  margin-top:70px;
-  font-weight:500;
+  margin-bottom:10px;
 }
 
-/* 🌊 WAVE */
+.card p{
+  font-size:14px;
+  opacity:0.7;
+}
+
+/* WAVE */
 .wave-container{
   position:absolute;
   bottom:0;
@@ -133,6 +135,60 @@ body{
   100%{transform:translateX(-50%);}
 }
 
+/* SIGN IN BUTTON (BOTTOM) */
+.sign-section{
+  text-align:center;
+  margin-top:200px;
+}
+
+.sign-btn{
+  padding:12px 30px;
+  border-radius:30px;
+  border:none;
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.sign-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 10px 30px rgba(56,189,248,0.5);
+}
+
+/* SCROLL TEXT */
+.scroll-text{
+  text-align:center;
+  margin-top:200px;
+  font-size:40px;
+  opacity:0;
+  transform:translateY(50px);
+}
+
+/* FINAL SECTION */
+.footer{
+  text-align:center;
+  margin-top:200px;
+}
+
+.footer h2{
+  font-size:50px;
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9,#7dd3fc);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.icons{
+  margin-top:20px;
+}
+
+.icons span{
+  margin:0 15px;
+  font-size:20px;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -146,7 +202,6 @@ body{
 
 <div class="topbar">
   <h2>hailo</h2>
-  <button>Sign In</button>
 </div>
 
 <div class="hero">
@@ -155,8 +210,15 @@ body{
 </div>
 
 <div class="cards">
-  <div class="card"><h3>Start</h3></div>
-  <div class="card"><h3>Explore</h3></div>
+  <div class="card">
+    <h3>Start</h3>
+    <p>Begin your journey with AI tools and smart automation.</p>
+  </div>
+
+  <div class="card">
+    <h3>Explore</h3>
+    <p>Discover features, models, and future tech innovations.</p>
+  </div>
 </div>
 
 <div class="wave-container">
@@ -171,6 +233,42 @@ body{
     </svg>
   </div>
 </div>
+
+<!-- SIGN BUTTON -->
+<div class="sign-section">
+  <button class="sign-btn">Sign In</button>
+</div>
+
+<!-- SCROLL TEXT -->
+<div class="scroll-text">
+  hailo to the era of technology
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <h2>hailo</h2>
+  <div class="icons">
+    <span>📧</span>
+    <span>💬</span>
+    <span>🛠️</span>
+  </div>
+</div>
+
+<script>
+
+/* SCROLL ANIMATION */
+$(window).on("scroll", function(){
+  let scroll = $(window).scrollTop();
+
+  if(scroll > 300){
+    $(".scroll-text").css({
+      opacity:1,
+      transform:"translateY(0)"
+    });
+  }
+});
+
+</script>
 
 </body>
 </html>
