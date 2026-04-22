@@ -236,7 +236,7 @@ body{
 
 <!-- SIGN BUTTON -->
 <div class="sign-section">
-  <button class="sign-btn">Sign In</button>
+  <button class="sign-btn" onclick="goToSignIn()">Sign In</button>
 </div>
 
 <!-- SCROLL TEXT -->
@@ -255,7 +255,9 @@ body{
 </div>
 
 <script>
-
+function goToSignIn(){
+  window.location.href = "sign_in.html";
+}
 /* SCROLL ANIMATION */
 $(window).on("scroll", function(){
   let scroll = $(window).scrollTop();
